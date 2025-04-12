@@ -10,7 +10,12 @@ const port = process.env.PORT || 8000;
 
 
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://stud-mu.vercel.app'],
+  methods: ['GET', 'POST', 'PUT'],
+  credentials: true,
+}));
+
 app.use(express.json());
 
 
