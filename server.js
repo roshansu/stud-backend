@@ -66,23 +66,26 @@ app.post("/register", upload.single("photo"), async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-  const users = await User.find({});
-  const usersWithBase64Photo = users.map(user => {
-    const base64 = user.photo?.data?.toString('base64');
-    const mime = user.photo?.contentType;
-    return {
-      _id: user._id,
-      name: user.name,
-      course: user.course,
-      year: user.year,
-      like: user.like,
-      dislike: user.dislike,
-      comment:user.comment,
-      photo: `data:${mime};base64,${base64}`
-    };
-  });
-  res.json(usersWithBase64Photo);
+  try {
+    const users = await User.find({});
+    const usersWithPhotoURL = users.map(user => {
+      return {
+        _id: user._id,
+        name: user.name,
+        course: user.course,
+        year: user.year,
+        like: user.like,
+        dislike: user.dislike,
+        comment: user.comment,
+        photo: `https://stud-backend-production.up.railway.app/photo/${user._id}` // ✅ image URL instead of base64
+      };
+    });
+    res.json(usersWithPhotoURL);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
+
 
 app.put('/', async (req, res)=>{
 
