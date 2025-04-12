@@ -65,26 +65,32 @@ app.post("/register", upload.single("photo"), async (req, res) => {
   }
 });
 
+// app.get('/', async (req, res) => {
+//   try {
+//     const users = await User.find({});
+//     const usersWithPhotoURL = users.map(user => {
+//       return {
+//         _id: user._id,
+//         name: user.name,
+//         course: user.course,
+//         year: user.year,
+//         like: user.like,
+//         dislike: user.dislike,
+//         comment: user.comment,
+//         photo: `https://stud-backend-production.up.railway.app/photo/${user._id}` // ✅ image URL instead of base64
+//       };
+//     });
+//     res.json(usersWithPhotoURL);
+//   } catch (err) {
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
+
 app.get('/', async (req, res) => {
-  try {
-    const users = await User.find({});
-    const usersWithPhotoURL = users.map(user => {
-      return {
-        _id: user._id,
-        name: user.name,
-        course: user.course,
-        year: user.year,
-        like: user.like,
-        dislike: user.dislike,
-        comment: user.comment,
-        photo: `https://stud-backend-production.up.railway.app/photo/${user._id}` // ✅ image URL instead of base64
-      };
-    });
-    res.json(usersWithPhotoURL);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
+  const users = await User.find({}, '-photo'); // no base64 image
+  res.json(users);
 });
+
 
 
 app.put('/', async (req, res)=>{
