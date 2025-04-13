@@ -9,7 +9,9 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 app.use(cors({
-  origin: '*', // Temporarily allow all origins
+  origin: ['https://stud-mu.vercel.app'],
+  methods: ['GET', 'POST', 'PUT'],
+  credentials: true,
 }));
 
 app.use(express.json());
