@@ -86,7 +86,9 @@ app.get('/', async (req, res) => {
       photo: `data:${mime};base64,${base64}`
     };
   });
-  res.json(usersWithBase64Photo);
+  const shuffledUsers = usersWithBase64Photo.sort(() => Math.random() - 0.5);
+
+    res.json(shuffledUsers);
 });
 
 // app.get('/', async (req, res) => {
