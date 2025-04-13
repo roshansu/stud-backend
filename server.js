@@ -9,11 +9,11 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: ['https://stud-mu.vercel.app/'],
+  origin: ['https://stud-mu.vercel.app'],
   methods: ['GET', 'POST', 'PUT'],
   credentials: true,
 }));
-
+app.options('*', cors());
 app.use(express.json());
 
 
