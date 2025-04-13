@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors({
-  origin: ['https://stud-mu.vercel.app'],
+  origin: ['https://zooming-integrity-production.up.railway.app/'],
   methods: ['GET', 'POST', 'PUT'],
   credentials: true,
 }));
