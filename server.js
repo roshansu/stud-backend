@@ -8,13 +8,26 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 8000;
 
-
+const allowedOrigins = [
+  'https://stud-mu.vercel.app',  // Your live frontend
+  'http://localhost:5173'        // Local dev frontend
+];
 
 app.use(cors({
-  origin: ['https://stud-mu.vercel.app'],
-  methods: ['GET', 'POST', 'PUT'],
-  credentials: true,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like curl or mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
+
+// Optional: Handle preflight requests
+app.options('*', cors());
 
 app.use(express.json());
 
