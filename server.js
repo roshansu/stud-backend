@@ -69,7 +69,9 @@ app.post("/register", upload.single("photo"), async (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-  const users = await User.find({ _id: { $ne: '67fa73fbbbce95054022cbfb' } });
+  const users = await User.find({
+  _id: { $nin: ['67fa73fbbbce95054022cbfb', '67fb4de44ed66eed0e0afe18'] }
+});
   const usersWithBase64Photo = users.map(user => {
     const base64 = user.photo?.data?.toString('base64');
     const mime = user.photo?.contentType;
