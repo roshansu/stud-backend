@@ -61,16 +61,16 @@ app.post("/register", upload.single("photo"), async (req, res) => {
     });
 
     await newUser.save();
-    return res.status(200).json({ message: "User registered successfully!" }); // 👈 important
+    return res.status(200).json({ message: "User registered successfully!" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Server error" }); // 👈 also JSON
+    return res.status(500).json({ message: "Server error" }); 
   }
 });
 
 app.get('/', async (req, res) => {
   const users = await User.find({
-  _id: { $nin: ['67fa73fbbbce95054022cbfb', '67fb4de44ed66eed0e0afe18'] }
+  _id: { $nin: ['67fa73fbbbce95054022cbfb', '67fb4de44ed66eed0e0afe18','67fc8005758da5dfecd32b15'] }
 });
   const usersWithBase64Photo = users.map(user => {
     const base64 = user.photo?.data?.toString('base64');
@@ -104,7 +104,7 @@ app.put('/', async (req, res)=>{
   try {
     await User.updateOne(
       { _id: req.body.id },
-      { $push: { comment: req.body.comm } } // 
+      { $push: { comment: req.body.comm } }
     );
     res.send("Comment added");
   } catch (err) {
